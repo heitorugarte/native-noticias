@@ -24,12 +24,23 @@ export default function reducer(
       };
     case "noticia/excluir":
       action.noticia.salvo = null;
-      state.listaNoticiasSalvas.pop(action.noticia);
       novaListaNoticiaSalva = [...state.listaNoticiasSalvas];
-      return {
-        ...state,
-        listaNoticiasSalvas: novaListaNoticiaSalva
-      };
+      let indice = novaListaNoticiaSalva.findIndex(noticia => {
+        return noticia.url == action.noticia.url;
+      });
+      novaListaNoticiaSalva.splice(indice, 1);
+      if (state.listaNoticias === state.listaNoticiasSalvas) {
+        return {
+          ...state,
+          listaNoticiasSalvas: novaListaNoticiaSalva,
+          listaNoticias: novaListaNoticiaSalva
+        };
+      } else {
+        return {
+          ...state,
+          listaNoticiasSalvas: novaListaNoticiaSalva
+        };
+      }
     case "noticia/mostrarSalvas":
       return {
         ...state,

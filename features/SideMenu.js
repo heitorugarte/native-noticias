@@ -8,7 +8,6 @@ import {
   Image
 } from "react-native";
 import { connect } from "react-redux";
-import { buscarNoticiasPais } from "../Api";
 
 const SideMenu = props => {
   return (
@@ -23,11 +22,9 @@ const SideMenu = props => {
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
           onPress={() => {
-            buscarNoticiasPais("us").then(listaNoticias => {
-              props.dispatch({
-                type: "noticia/updateLista",
-                listaNoticias: listaNoticias
-              });
+            props.dispatch({
+              type: "requestNoticias/country",
+              country: "us"
             });
             props.dispatch({
               type: "sideMenu/hide"
@@ -46,11 +43,9 @@ const SideMenu = props => {
           activeOpacity={0.6}
           underlayColor="#DDDDDD"
           onPress={() => {
-            buscarNoticiasPais("br").then(listaNoticias => {
-              props.dispatch({
-                type: "noticia/updateLista",
-                listaNoticias: listaNoticias
-              });
+            props.dispatch({
+              type: "requestNoticias/country",
+              country: "br"
             });
             props.dispatch({
               type: "sideMenu/hide"

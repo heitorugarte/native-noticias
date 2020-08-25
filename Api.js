@@ -1,5 +1,3 @@
-import { connect } from "react-redux";
-
 /**
  * @class Api
  *
@@ -10,6 +8,7 @@ import { connect } from "react-redux";
  *
  */
 export function buscarNoticiasPorPalavra(palavra) {
+  console.log("BUSCAR NOTICIA: " + palavra);
   if (palavra == "") return this.buscarNoticiasPais("br");
   let query = palavra.trim();
   return new Promise(async result => {

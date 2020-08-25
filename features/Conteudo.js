@@ -1,18 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
 import NewsCard from "./NewsCard";
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import { buscarNoticiasPais } from "../Api";
 
 const Conteudo = props => {
   useEffect(() => {
     if (props.listaNoticias.length === 0)
-      buscarNoticiasPais("br").then(listaNoticias => {
-        props.dispatch({
-          type: "noticia/updateLista",
-          listaNoticias: listaNoticias
-        });
+      props.dispatch({
+        type: "requestNoticias/country",
+        country: "br"
       });
   });
   return (
@@ -35,5 +32,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Conteudo);
-
-const styles = StyleSheet.create({});
