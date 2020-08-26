@@ -2,7 +2,8 @@ export default function reducer(
   state = {
     listaNoticias: [],
     listaNoticiasSalvas: [],
-    sideMenuVisible: false
+    sideMenuVisible: false,
+    countryAtual: "Brasil"
   },
   action
 ) {
@@ -10,9 +11,13 @@ export default function reducer(
   switch (action.type) {
     case "noticia/updateLista":
       novaLista = action.listaNoticias;
+      let novoCountryAtual = action.countryAtual
+        ? action.countryAtual
+        : "Query...";
       return {
         ...state,
-        listaNoticias: novaLista
+        listaNoticias: novaLista,
+        countryAtual: novoCountryAtual
       };
     case "noticia/salvar":
       let novaListaNoticiaSalva = [...state.listaNoticiasSalvas];
@@ -25,10 +30,12 @@ export default function reducer(
     case "noticia/excluir":
       action.noticia.salvo = null;
       novaListaNoticiaSalva = [...state.listaNoticiasSalvas];
-      let indice = novaListaNoticiaSalva.findIndex(noticia => {
-        return noticia.url == action.noticia.url;
-      });
-      novaListaNoticiaSalva.splice(indice, 1);
+      novaListaNoticiaSalva.splice(
+        novaListaNoticiaSalva.findIndex(noticia => {
+          return noticia.url == action.noticia.url;
+        }),
+        1
+      );
       if (state.listaNoticias === state.listaNoticiasSalvas) {
         return {
           ...state,
@@ -44,7 +51,8 @@ export default function reducer(
     case "noticia/mostrarSalvas":
       return {
         ...state,
-        listaNoticias: state.listaNoticiasSalvas
+        listaNoticias: state.listaNoticiasSalvas,
+        countryAtual: "fav"
       };
     case "sideMenu/show":
       return {

@@ -6,9 +6,11 @@ import {
   Image,
   StatusBar,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  Picker
 } from "react-native";
 import { connect } from "react-redux";
+import paises from "./Paises";
 
 const Header = props => {
   return (
@@ -31,18 +33,50 @@ const Header = props => {
         style={styles.queryInput}
         placeholder="Pesquisar..."
         onSubmitEditing={event => {
-          console.log(event.nativeEvent.text);
           props.dispatch({
             type: "requestNoticias/query",
             query: event.nativeEvent.text
           });
         }}
       />
+      <Picker
+        style={styles.modalPicker}
+        selectedValue={props.countryAtual}
+        onValueChange={(itemValue, itemIndex) => {
+          props.dispatch({
+            type: "requestNoticias/country",
+            country: itemValue
+          });
+        }}
+      >
+        {createPickerOptions(paises)}
+      </Picker>
     </View>
   );
 };
 
-export default connect()(Header);
+const createPickerOptions = paises => {
+  let pickerItems = [];
+  let keys = Object.keys(paises);
+  let values = Object.values(paises);
+
+  pickerItems.push(
+    keys.map(function(key, index) {
+      return (
+        <Picker.Item label={values[index]} value={keys[index]} key={key} />
+      );
+    })
+  );
+  return pickerItems;
+};
+
+const mapHeaderToProps = state => {
+  return {
+    countryAtual: state.countryAtual
+  };
+};
+
+export default connect(mapHeaderToProps)(Header);
 
 const styles = StyleSheet.create({
   header: {
@@ -70,10 +104,11 @@ const styles = StyleSheet.create({
   },
   queryInput: {
     padding: 5,
-    margin: 5,
+    marginLeft: 5,
+    marginBottom: 10,
     backgroundColor: "#22aa4A",
     fontSize: 16,
-    width: 256,
+    width: "45%",
     height: 32,
     shadowColor: "#000",
     shadowOffset: {
@@ -84,6 +119,23 @@ const styles = StyleSheet.create({
     shadowRadius: 16.0,
     elevation: 32,
     borderRadius: 3,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    color: "white"
+  },
+  modalPicker: {
+    width: "45%",
+    height: 32,
+    marginRight: 10,
+    marginBottom: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 12
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 32,
+    backgroundColor: "#22aa4A",
+    color: "white"
   }
 });

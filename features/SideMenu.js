@@ -80,6 +80,20 @@ const SideMenu = props => {
             <Text style={styles.btn}>Favoritos</Text>
           </View>
         </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          underlayColor="#DDDDDD"
+          style={styles.btFechar}
+          onPress={() => {
+            props.dispatch({
+              type: "sideMenu/hide"
+            });
+          }}
+        >
+          <View style={styles.btnViewFechar}>
+            <Text style={styles.btn}>Fechar</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
@@ -101,7 +115,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#007C4A",
     alignSelf: "flex-end",
     borderTopWidth: 1,
-    borderLeftWidth: 1
+    borderLeftWidth: 1,
+    flexDirection: "column"
   },
   btnView: {
     backgroundColor: "#2C73D2",
@@ -123,5 +138,9 @@ const styles = StyleSheet.create({
   btnImg: {
     width: 32,
     height: 32
+  },
+  btFechar: {
+    justifyContent: "flex-end",
+    alignSelf: "flex-end"
   }
 });

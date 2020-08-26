@@ -23,7 +23,7 @@ const Card = props => {
       >
         {props.noticia.title}
       </Text>
-      {!props.noticia.salvo ? (
+      {!props.salvo ? (
         <TouchableOpacity
           style={styles.viewSalvar}
           onPress={() => {

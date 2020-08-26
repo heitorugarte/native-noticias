@@ -18,9 +18,21 @@ const Conteudo = props => {
       data={props.listaNoticias}
       renderItem={item => {
         if (item.item.content && item.item.title)
-          return <NewsCard noticia={item.item} />;
+          return (
+            <NewsCard
+              noticia={item.item}
+              salvo={isNoticiaSalva(props, item.item)}
+            />
+          );
       }}
     />
+  );
+};
+
+const isNoticiaSalva = (props, noticia) => {
+  return (
+    props.listaNoticiasSalvas.find(item => item.url === noticia.url) !=
+    undefined
   );
 };
 
